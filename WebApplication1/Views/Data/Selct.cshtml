@@ -1,0 +1,212 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "未完结流程";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+
+
+
+<!-- 页面加载显示 -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+
+    <link href="~/htmlLoding/css/normalize.css" rel="stylesheet" />
+    <link href="~/htmlLoding/css/default.css" rel="stylesheet" />
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/htmlLoding/css/Icomoon/style.css" rel="stylesheet" />
+    <link href="css/Icomoon/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/htmlLoding/js/jquery-2.0.2.min.js"></script>
+    <script src="~/htmlLoding/js/main.js"></script>
+
+    <script type="text/javascript" src="js/jquery-2.0.2.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <link href="~/htmlLoding/jiazai.css" rel="stylesheet" />
+</head>
+
+<div id="loading">
+    <div id="loading-center">
+        <div id="loading-center-absolute">
+            <div id="object"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(window).load(function () {
+        $("#loading").fadeOut(5000);
+    })
+
+</script>
+
+
+<div style="width:100%;height:60px;background-color:black">
+    <h2 style="color:white;float:left;padding:15px">事业部未完成流程</h2>
+</div>
+
+
+<h2 style="height:50px">
+
+    <a style="float:right;margin-top:10px;margin-left: 10px" type="button" class="layui-btn layui-btn-normal layui-btn-radius" href="/Data/Selct?ids=@ViewData["Sname"]">待督办<text style="float:right;margin-top:65px;margin-left: 10px" ;text class="nav-counter nav-counter-blue">@ViewData["GSum"]</text></a>
+
+    <a style="float:right;margin-top:10px" type="button" class="layui-btn layui-btn-warm layui-btn-radius" href="/Data/SSelectName?names=@ViewData["Sname"]&Mz=@ViewData["User"]">待审批 <text style="float:right;margin-top:65px;margin-right: 84px" ;text class="nav-counter nav-counter-blue">@ViewData["Ssum"]</text></a>
+
+
+    <a style="float:right;margin-top:10px" type="button" class="layui-btn layui-btn-primary layui-btn-radius" href="/Data/TSelectName?names=@ViewData["Tname"]">我发起 <text style="float:right;margin-top:65px;margin-right: 172px" ;text class="nav-counter nav-counter-blue">@ViewData["TSum"]</text></a>
+
+
+
+</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>未完结流程</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.all.js"></script>
+    <link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+
+    <script src="~/layuiadmin/layui/lay/modules/util.js"></script>
+
+
+
+</head>
+<body>
+
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            @*//th:href="@{///user/user_add}"-->*@
+            @*<button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delBatchAll"><i class="layui-icon"></i>批量删除</button>*@
+
+        </div>
+    </script>
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script src="~/jquery-3.3.1.js"></script>
+
+
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render({
+                elem: '#test'
+                , url: '/Data/Look'
+                ,height: 'full-130' //高度最大化减去差值
+                , checkbox: true
+                , title: '用户数据表'
+                , totalRow: false
+                , limit: 100
+                , limits:[100]
+                , cols: [[
+
+                     { field: 'OrgName', title: '发起人公司名称', width: 180}
+                    , { field: 'DeptName', title: '发起人部门名称', width: 180 }
+                    , { field: 'ID', title: '流程编号', width: 180 }
+                    , { field: 'ProcessName', title: '流程名称', width: 180 }
+                    , { field: 'ProcessCategoryName', title: '流程类型', width: 177 }
+                    , { field: 'Topic', title: '流程主题', width: 177 }
+                    , { field: 'StartDate', title: '开始时间', sort: true, width: 177, templet: '<div>{{ FormDate(d.StartDate, "yyyy-MM-dd HH:mm:ss") }}</div>' }
+
+                    , { field: 'Originator', title: '发起人编号', width: 177 }
+                    , { field: 'OriginatorName', title: '发起人姓名', width: 177 }
+                    , { field: 'State', title: '状态', width: 177 }
+                    , { field: 'StratType', title: '来源系统', width: 177 }
+                    , { field: 'ProcInstID', title: '当前审批人编号', width: 177 }
+                    , { field: 'JobUserName', title: '当前审批人名称', width: 177 }
+                    , { field: 'JobStepName', title: '节点名称', width: 177 }
+                    , { field: 'rows', title: '标准时效', width: 177 }
+                    , { field: 'WF_DataAuthorityDetailID', title: '实际时效' , width: 177 }
+                ]]
+                , page: true
+                , parseData: function (res) { //res 即为原始返回的数据
+                    console.log(res)
+                    return {
+                        "code": res.status, //解析接口状态
+                        "msg": res.nessage, //解析提示文本
+                        "count": res.total, //解析数据长度
+                        "data": res.data.Item //解析数据列表
+                    };
+                },
+                done: function (res,curr,count) {
+                    var index = -1;
+                    var datime = new Date();
+                    var toyear = datime.getFullYear().toString();
+                    var tomonth = '0' + (datime.getMonth() + 1);
+                    if (tomonth.length > 2) {
+                        var tomonth = (datime.getMonth() + 1);
+                    }
+
+                    var toDay = datime.getDate().toString();
+
+                    var totime = toyear + tomonth + toDay;
+                 //   alert(count);
+                   // alert(res.data[0].WF_DataAuthorityDetailID);
+                    for (var i = 0; i < count; i++) {
+                        //alert(i);
+                        if (parseFloat(res.data[i].WF_DataAuthorityDetailID) <= 12) {
+                            $("tr[data-index='" + i + "']").attr({ "style": "color:#009688" });  //将当前行变成绿色
+                        }
+                        else if (parseFloat(res.data[i].WF_DataAuthorityDetailID) > 12 && parseFloat(res.data[i].WF_DataAuthorityDetailID) <= parseFloat(res.data[i].rows)) {
+
+                            $("tr[data-index='" + i + "']").attr({ "style": "color:#b3a605" });  //将当前行变成橙色
+
+                        }
+                        else if (parseFloat(res.data[i].WF_DataAuthorityDetailID) >= parseFloat(res.data[i].rows) || (totime - FormDate(res.data[0].StartDate, "yyyyMMdd")) > 5) {
+                            $("tr[data-index='" + i + "']").attr({ "style": "color:#F44336" });  //将当前行变成红色
+                        }
+
+
+                    }
+
+
+                }
+
+            });
+
+        });
+
+    </script>
+    <script>
+        function FormDate(str, fmt) { //str: 日期字符串；fmt:格式类型
+            if (str == null || str == '') {
+                return "";
+            }
+            var date = eval('new ' + str.substr(1, str.length - 2)); //截取字符串之后：Date(1572490889017)
+            var o = {
+                "M+": date.getMonth() + 1, //月份
+                "d+": date.getDate(), //日
+                "H+": date.getHours(), //小时
+                "m+": date.getMinutes(), //分
+                "s+": date.getSeconds(), //秒
+                "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+                "S": date.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+
+    </script>
+</body>
+</html>
+
+
+
